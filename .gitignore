@@ -1,0 +1,5 @@
+*.pyc
+*.pid
+*.log
+tdf.tac
+*~
