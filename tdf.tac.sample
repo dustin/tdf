@@ -1,0 +1,34 @@
+#!/usr/bin/env python
+"""
+
+Copyright (c) 2009  Dustin Sallings <dustin@spy.net>
+"""
+
+import sys
+
+sys.path.append("lib")
+
+from twisted.application import internet, service
+from twisted.web import server, resource, static
+from twisted.internet import defer, task
+
+import tdf
+
+# Basic configuration
+PORT=8080
+ROOT='example'
+
+application = service.Application('tdf')
+serviceCollection = service.IServiceCollection(application)
+
+# Keep really short sessions.
+server.Session.sessionTimeout=30
+
+commands = tdf.Commands()
+
+root = static.File(ROOT)
+root.putChild('cmds', commands)
+
+site = server.Site(root)
+site.sessionCheckTime = 30
+internet.TCPServer(PORT, site).setServiceParent(serviceCollection)
