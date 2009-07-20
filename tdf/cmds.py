@@ -88,19 +88,22 @@ class CommandResource(resource.Resource):
         self.requests=[]
         self.args = args
         self.known_sessions = {}
+        self.process = None
         self.handler = ProcessHandler(self, args[0], lineFilter)
-        reactor.callWhenRunning(self.initProcess)
         l = task.LoopingCall(self.__touch_active_sessions)
         l.start(5, now=False)
 
     def initProcess(self):
-        reactor.spawnProcess(self.handler, self.args[0], self.args)
+        self.process = reactor.spawnProcess(self.handler,
+                                            self.args[0], self.args)
 
     def lineReceived(self, line_id, line):
         for req in self.requests:
             self.__transmit_json(req, [line])
 
     def render_GET(self, request):
+        if not self.handler.active:
+            self.initProcess()
         session = request.getSession()
         if session.uid not in self.known_sessions:
             print "New session: ", session.uid
@@ -138,6 +141,8 @@ class CommandResource(resource.Resource):
         def f():
             print "Expired session", sid
             del self.known_sessions[sid]
+            if self.handler.active and not self.known_sessions:
+                self.process.signalProcess('INT')
         return f
 
     def __mk_res(self, req, s, t):
