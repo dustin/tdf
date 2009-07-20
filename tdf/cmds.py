@@ -97,7 +97,7 @@ class CommandResource(resource.Resource):
 
     def lineReceived(self, line_id, line):
         for req in self.requests:
-            self.__transmit_json(req, [line], line_id)
+            self.__transmit_json(req, [line])
 
     def render_GET(self, request):
         session = request.getSession()
