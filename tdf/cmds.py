@@ -74,6 +74,7 @@ class ProcessHandler(LineOnlyReceiver):
     def processEnded(self, reason):
         log.msg("Finished cmd: %s: %s" % (self.cmd, reason))
         self.active = False
+        self.recent = LineHistory()
 
     def processExited(self, reason):
         log.msg("%s has exited: %s" % (self.cmd, reason))
