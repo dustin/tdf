@@ -39,3 +39,6 @@ class LineHistoryTest(unittest.TestCase):
 
         self.assertEquals(stuff[0], (4, 'a'))
         self.assertEquals(stuff[-1], (5, 'test'))
+
+        stuff = self.lh.since(5)
+        self.assertFalse(stuff)

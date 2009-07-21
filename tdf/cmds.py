@@ -22,6 +22,8 @@ class LineHistory(deque):
         super(LineHistory, self).__init__([], size)
 
     def since(self, n):
+        if n == self.seq_id:
+            return []
         # If a nonsense ID comes in, scoop them all up.
         if n > self.seq_id:
             log.msg("Overriding last ID from %d to %d" % (n, self.seq_id))
