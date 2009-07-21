@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 
-Copyright (c) 2008  Dustin Sallings <dustin@spy.net>
+Copyright (c) 2009  Dustin Sallings <dustin@spy.net>
 """
 
 import cStringIO as StringIO
