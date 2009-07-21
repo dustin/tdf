@@ -19,7 +19,8 @@ class LineHistory(deque):
     seq_id = 0
 
     def __init__(self, size=25):
-        super(LineHistory, self).__init__([], size)
+        super(LineHistory, self).__init__()
+        self.size = size
 
     def since(self, n):
         if n == self.seq_id:
@@ -35,6 +36,8 @@ class LineHistory(deque):
     def append(self, x):
         self.seq_id = self.seq_id + 1
         super(LineHistory, self).append((self.seq_id, x))
+        while len(self) > self.size:
+            self.popleft()
 
 class ProcessHandler(LineOnlyReceiver):
 

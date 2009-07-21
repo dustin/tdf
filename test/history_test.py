@@ -42,3 +42,10 @@ class LineHistoryTest(unittest.TestCase):
 
         stuff = self.lh.since(5)
         self.assertFalse(stuff)
+
+    def testDequeue(self):
+        for i in range(30):
+            self.lh.append(i)
+
+        self.assertEquals(25, len(self.lh))
+        self.assertEquals(5, self.lh[0][1])
