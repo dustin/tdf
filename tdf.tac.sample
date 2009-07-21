@@ -24,7 +24,10 @@ serviceCollection = service.IServiceCollection(application)
 # Keep really short sessions.
 server.Session.sessionTimeout=30
 
-commands = tdf.Commands()
+commands = resource.Resource()
+
+# Your custom commands map in here:
+# commands.putChild("uri_path", cmds.CommandResource(argv))
 
 root = static.File(ROOT)
 root.putChild('cmds', commands)
