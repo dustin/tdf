@@ -12,7 +12,7 @@ from twisted.application import internet, service
 from twisted.web import server, resource, static
 from twisted.internet import defer, task
 
-import tdf
+from tdf import cmds
 
 # Basic configuration
 PORT=8080
