@@ -101,7 +101,7 @@ class CommandResource(resource.Resource):
 
     def lineReceived(self, line_id, line):
         for req in self.requests:
-            self.__transmit_json(req, [line])
+            self.__deliver(req)
 
     def render_GET(self, request):
         if not self.handler.active:
