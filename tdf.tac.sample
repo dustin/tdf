@@ -29,6 +29,9 @@ commands = resource.Resource()
 # Your custom commands map in here:
 # commands.putChild("uri_path", cmds.CommandResource(argv))
 
+commands.putChild("ping",
+                  cmds.CommandResource(['/sbin/ping', 'localhost']))
+
 root = static.File(ROOT)
 root.putChild('cmds', commands)
 
